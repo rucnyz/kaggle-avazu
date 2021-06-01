@@ -1,9 +1,9 @@
 import utils
 from utils import *
 
-sys.path.append(utils.xgb_path)
 import xgboost as xgb
 
+sys.stdout = Logger('D:\\2014_mobilectr\\3_gbdt.txt')
 t0tv_mx_save = load(utils.tmp_data_path + 't0tv_mx3.joblib_dat')
 t0tv_mx3 = t0tv_mx_save['t0tv_mx']
 click_values = t0tv_mx_save['click']
@@ -21,7 +21,7 @@ param = {'max_depth': 15, 'eta': .02, 'objective': 'binary:logistic', 'verbose':
 
 nn = t0tv_mx3.shape[0]
 np.random.seed(999)
-sample_idx = np.random.random_integers(0, 3, nn)
+sample_idx = np.random.randint(0, 4, nn)
 
 predv_xgb = 0
 ctr = 0
@@ -51,3 +51,4 @@ for idx in [0, 1, 2, 3]:
 
 print("to save validation predictions ...")
 dump(predv_xgb / ctr, utils.tmp_data_path + 'xgb_pred_v.joblib_dat')
+sys.stdout.close()

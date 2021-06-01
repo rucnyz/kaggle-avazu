@@ -1,6 +1,6 @@
 #照着这个跑，应该可以得到我的那个0.4的结果,记得换utils.py里面的路径
 # small test run using day 30 as validation
-python utils.py -set_params N 0.05
+python utils.py -set_params N 0.05 small
 python _1_encode_cat_features.py
 python _2b_generate_dataset_for_vw_fm.py
 python _2c_generate_fm_features.py

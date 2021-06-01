@@ -1,6 +1,7 @@
 import utils
 from utils import *
 
+sys.stdout = Logger('D:\\2014_mobilectr\\4_final_output.txt')
 t0tv_mx_save = load(utils.tmp_data_path + 't0tv_mx.joblib_dat')
 click_values = t0tv_mx_save['click']
 day_values = t0tv_mx_save['day']
@@ -78,3 +79,4 @@ else:
     print("=" * 80)
     print("logloss of blended prediction:", logloss(pred, click_values[day_values == day_test]))
     print("=" * 80)
+sys.stdout.close()

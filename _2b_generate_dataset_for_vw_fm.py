@@ -1,6 +1,7 @@
 import utils
 from utils import *
 
+sys.stdout = Logger('D:\\2014_mobilectr\\2_generate_dataset_for_lr_fm.txt')
 t0 = load(utils.tmp_data_path + 't0.joblib_dat')
 print("t0 loaded with shape", t0.shape)
 
@@ -56,3 +57,4 @@ t3a_save = {}
 t3a_save['t3a'] = t3a
 t3a_save['idx_base'] = idx_base
 dump(t3a_save, utils.tmp_data_path + 't3a.joblib_dat')
+sys.stdout.close()

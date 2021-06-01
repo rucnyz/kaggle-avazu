@@ -4,8 +4,7 @@ from sklearn.linear_model import LogisticRegression
 import utils
 from utils import *
 
-sys.path.append(utils.xgb_path)
-
+sys.stdout = Logger('D:\\2014_mobilectr\\3_lr.txt')
 rseed = 0
 xgb_eta = .3
 tvh = utils.tvh
@@ -181,3 +180,4 @@ np.savetxt(path1 + "lr__r%d_v.txt.out" % rseed, a[:, 1])
 #              "-i " + mdl_name + " -p " + fn_validate + "_pred.txt -t --loss_function logistic --progress 200000"
 # print(vw_cmd_str)
 # os.system(vw_cmd_str)
+sys.stdout.close()

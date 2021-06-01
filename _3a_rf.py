@@ -3,6 +3,7 @@ from sklearn.ensemble import RandomForestClassifier
 import utils
 from utils import *
 
+sys.stdout = Logger('D:\\2014_mobilectr\\3_rf.txt')
 t0tv_mx_save = load(utils.tmp_data_path + 't0tv_mx3.joblib_dat')
 t0tv_mx3 = t0tv_mx_save['t0tv_mx']
 click_values = t0tv_mx_save['click']
@@ -63,3 +64,4 @@ print(rf1_imp.sort_values('impt'))
 
 print("to save validation predictions ...")
 dump(predv / ctr, utils.tmp_data_path + 'rf_pred_v.joblib_dat')
+sys.stdout.close()

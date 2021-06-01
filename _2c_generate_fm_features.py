@@ -3,6 +3,7 @@ import os
 import utils
 from utils import *
 
+sys.stdout = Logger('D:\\2014_mobilectr\\2_generate_fm_features.txt')
 t0tv_mx_save = load(utils.tmp_data_path + 't0tv_mx.joblib_dat')
 t0tv_mx = t0tv_mx_save['t0tv_mx']
 click_values = t0tv_mx_save['click']
@@ -30,14 +31,13 @@ vns['all_but_ip'] = ['app_or_web', 'device_conn_type', 'C18', 'device_type',
                      '_A_C21', '_A_C20', '_A_C17', '_A_C14', 'as_model', 'dev_id2plus']
 
 cmd_str = utils.fm_path + \
-          ' -t 4 -s 8 -l 1e-5 D:/2014_mobilectr/tmp_data/fn/_tmp_2way_v.txt D:/2014_mobilectr/tmp_data/fn/_tmp_2way_t.txt'
+          ' -t 4 -s 8 -l 1e-5 ' + utils.tmp_data_path + '_tmp_2way_v.txt ' + utils.tmp_data_path + '_tmp_2way_t.txt'
 
 day_bgn = 22
 day_end = 32
 
 fm_vecs = {}
-path1 = 'D:/2014_mobilectr/tmp_data/fn/'
-os.mkdir(path1)
+path1 = utils.tmp_data_path
 fn_t = path1 + '_tmp_2way_t.txt'
 fn_v = path1 + '_tmp_2way_v.txt'
 for day_v in range(day_bgn, day_end):
@@ -90,3 +90,4 @@ print("t0tv_mx3 generated with shape", t0tv_mx3.shape)
 
 t0tv_mx_save = {'t0tv_mx': t0tv_mx3, 'click': click_values, 'day': day_values}
 dump(t0tv_mx_save, utils.tmp_data_path + '/t0tv_mx3.joblib_dat')
+sys.stdout.close()

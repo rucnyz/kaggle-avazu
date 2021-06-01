@@ -1,3 +1,4 @@
+import os
 import sys
 import time
 
@@ -11,13 +12,30 @@ sample_pct = .05
 tvh = 'N'
 xgb_n_trees = 300
 
+
+class Logger(object):
+    def __init__(self, filename = "Default.log"):
+        self.terminal = sys.stdout
+        self.log = open(filename, "a")
+
+    def close(self):
+        self.log.close()
+
+    def write(self, message):
+        self.terminal.write(message)
+        self.log.write(message)
+
+    def flush(self):
+        pass
+
+
 # Please set following path accordingly
 
 # where we can find training, test, and sampleSubmission.csv
 raw_data_path = 'D:\\2014_mobilectr\\raw_data\\'
 # where we store results -- require about 130GB
 tmp_data_path = 'D:\\2014_mobilectr\\tmp_data\\'
-
+data_type = ''
 # path to external binaries. Please see dependencies in the .pdf document
 # 换一下fm
 fm_path = ' D:\\2014_mobilectr\\kaggle-2014-criteo-1.0\\solvers\\fm\\fm'
@@ -30,21 +48,28 @@ try:
     params = load(tmp_data_path + '_params.joblib_dat')
     sample_pct = params['pct']
     tvh = params['tvh']
+    data_type = params['type']
+    tmp_data_path += data_type + "\\"
 except:
     pass
 
 
 def print_help():
-    print("usage: python utils -set_params [tvh=Y|N], [sample_pct]")
-    print("for example: python utils -set_params N 0.05")
+    print("usage: python utils -set_params [tvh=Y|N], [sample_pct], [data_type]")
+    print("for example: python utils -set_params N 0.05 small")
 
 
 def main():
-    if sys.argv[1] == '-set_params' and len(sys.argv) == 4:
+    if sys.argv[1] == '-set_params' and len(sys.argv) == 5:
         try:
             tvh = sys.argv[2]
             sample_pct = float(sys.argv[3])
-            dump({'pct': sample_pct, 'tvh': tvh}, tmp_data_path + '_params.joblib_dat')
+            data_type = sys.argv[4]
+            dump({'pct': sample_pct, 'tvh': tvh, 'type': data_type}, tmp_data_path + '_params.joblib_dat')
+            try:
+                os.mkdir(tmp_data_path+data_type)
+            except:
+                pass
         except:
             print_help()
     else:

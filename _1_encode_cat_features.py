@@ -1,10 +1,14 @@
 import utils
 from utils import *
 
+sys.stdout = Logger('D:\\2014_mobilectr\\1_encode.txt')
 raw_data_path = utils.raw_data_path
 tmp_data_path = utils.tmp_data_path
 # t0org0是总的数据
-t0org0 = pd.read_csv(raw_data_path + "train.csv")
+if utils.data_type == "small":
+    t0org0 = pd.read_csv(raw_data_path + "new_train.csv")
+else:
+    t0org0 = pd.read_csv(raw_data_path + "train.csv")
 h0org = pd.read_csv(raw_data_path + "test.csv")
 
 if utils.sample_pct < 1.0:
@@ -192,3 +196,5 @@ print("to save t0tv_mx ...")
 
 t0tv_mx_save = {'t0tv_mx': t0tv_mx, 'click': t0.click.values, 'day': t0.day.values, 'site_id': t0.site_id.values}
 dump(t0tv_mx_save, tmp_data_path + 't0tv_mx.joblib_dat')
+
+sys.stdout.close()
