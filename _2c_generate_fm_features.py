@@ -28,62 +28,63 @@ vns['all_but_ip'] = ['app_or_web', 'device_conn_type', 'C18', 'device_type',
                      '_A_C1', '_A_banner_pos', '_A_C16', '_A_C15', '_A_C18', '_A_C19',
                      '_A_C21', '_A_C20', '_A_C17', '_A_C14', 'as_model', 'dev_id2plus']
 
-cmd_str = utils.fm_path + ' -t 4 -s 8 -l 1e-5 /dev/shm/_tmp_2way_v.txt /dev/shm/_tmp_2way_t.txt'
+cmd_str = utils.fm_path + \
+          ' -t 4 -s 8 -l 1e-5 D:/2014_mobilectr/tmp_data/fn/_tmp_2way_v.txt D:/2014_mobilectr/tmp_data/fn/_tmp_2way_t.txt'
 
 day_bgn = 22
 day_end = 32
 
 fm_vecs = {}
 for day_v in range(day_bgn, day_end):
-	fm_vecs[day_v] = {}
-	for vns_name in vns.keys():
-		vns2 = vns[vns_name]
+    fm_vecs[day_v] = {}
+    for vns_name in vns.keys():
+        vns2 = vns[vns_name]
 
-		print(day_v, vns_name)
-		t1 = t0.ix[:, ['click']].copy()
+        print(day_v, vns_name)
+        t1 = t0.loc[:, ['click']].copy()
 
-		idx_base = 0
+        idx_base = 0
 
-		for vn in vns2:
-			t1[vn] = t0[vn].values
-			t1[vn] = np.asarray(t1[vn].astype('category').values.codes, np.int32) + idx_base
-			idx_base = t1[vn].values.max() + 1
-		# print '-'* 5, vn, idx_base
+        for vn in vns2:
+            t1[vn] = t0[vn].values
+            t1[vn] = np.asarray(t1[vn].astype('category').values.codes, np.int32) + idx_base
+            idx_base = t1[vn].values.max() + 1
+        # print '-'* 5, vn, idx_base
 
-		path1 = '/dev/shm/'
-		fn_t = path1 + '_tmp_2way_t.txt'
-		fn_v = path1 + '_tmp_2way_v.txt'
+        path1 = 'D:/2014_mobilectr/tmp_data/fn/'
+        fn_t = path1 + '_tmp_2way_t.txt'
+        fn_v = path1 + '_tmp_2way_v.txt'
 
-		print("to write data files ...")
+        print("to write data files ...")
 
-		t1.ix[np.logical_and(day_values >= 21, day_values < day_v), :].to_csv(open(fn_t, 'w'), sep = '\t',
-		                                                                      header = False, index = False)
-		t1.ix[day_values == day_v, :].to_csv(open(fn_v, 'w'), sep = '\t', header = False, index = False)
+        t1.loc[np.logical_and(day_values >= 21, day_values < day_v), :].to_csv(open(fn_t, 'w'), sep = '\t',
+                                                                               header = False, index = False)
+        t1.loc[day_values == day_v, :].to_csv(open(fn_v, 'w'), sep = '\t', header = False, index = False)
 
-		print(cmd_str)
-		os.system(cmd_str)
+        print(cmd_str)
+        os.system(cmd_str)
 
-		print("load results ...")
-		fm_predv = pd.read_csv(open(path1 + '_tmp_2way_v.txt.out', 'r'), header = None).ix[:, 0].values
+        print("load results ...")
+        fm_predv = pd.read_csv(open(path1 + '_tmp_2way_v.txt.out', 'r'), header = None).loc[:, 0].values
 
-		print("--- gini_norm:", gini_norm(fm_predv, click_values[day_values == day_v], None))
+        print("--- gini_norm:", gini_norm(fm_predv, click_values[day_values == day_v], None))
 
-		fm_vecs[day_v][vns_name] = fm_predv
-		print('=' * 60)
+        fm_vecs[day_v][vns_name] = fm_predv
+        print('=' * 60)
 
-t2 = t0.ix[:, ['click']].copy()
+t2 = t0.loc[:, ['click']].copy()
 
 nn = t2.shape[0]
 for vns_name in vns.keys():
-	t2[vns_name] = np.zeros(nn)
-	for day_v in range(day_bgn, day_end):
-		print(day_v, vns_name)
-		t2.ix[day_values == day_v, vns_name] = fm_vecs[day_v][vns_name]
+    t2[vns_name] = np.zeros(nn)
+    for day_v in range(day_bgn, day_end):
+        print(day_v, vns_name)
+        t2.loc[day_values == day_v, vns_name] = fm_vecs[day_v][vns_name]
 
 print("to save FM features ...")
 dump(t2, tmp_data_path + 't2.joblib_dat')
 
-t0tv_mx3 = np.concatenate([t0tv_mx[:, :43], t2.ix[:, 1:].as_matrix()], axis = 1)
+t0tv_mx3 = np.concatenate([t0tv_mx[:, :43], t2.iloc[:, 1:].to_numpy()], axis = 1)
 print("t0tv_mx3 generated with shape", t0tv_mx3.shape)
 
 t0tv_mx_save = {'t0tv_mx': t0tv_mx3, 'click': click_values, 'day': day_values}

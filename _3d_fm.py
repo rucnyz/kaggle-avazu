@@ -93,11 +93,11 @@ def build_data():
 		t3a[vn] = _cat1
 		idx_base += _cat.max() + 1
 
-	t3a.ix[np.logical_and(np.logical_and(day_values < test_day, day_values >= 22), True), :].to_csv(open(fn_t, 'w'),
+	t3a.loc[np.logical_and(np.logical_and(day_values < test_day, day_values >= 22), True), :].to_csv(open(fn_t, 'w'),
 	                                                                                                sep = '\t',
 	                                                                                                header = False,
 	                                                                                                index = False)
-	t3a.ix[day_values == test_day, :].to_csv(open(fn_v, 'w'), sep = '\t', header = False, index = False)
+	t3a.loc[day_values == test_day, :].to_csv(open(fn_v, 'w'), sep = '\t', header = False, index = False)
 
 
 build_data()
@@ -108,10 +108,10 @@ gc.collect()
 import os
 
 fm_cmd = utils.fm_path + ' -k ' + str(nr_factor) + ' -t ' + str(n_iter) + ' -s ' + str(n_threads) + ' '
-fm_cmd += ' -d ' + str(rseed) + ' -r ' + str(learning_rate) + ' ' + fn_v + ' ' + fn_t
+fm_cmd +=  ' -r ' + str(learning_rate) + ' ' + fn_v + ' ' + fn_t
 
 print(fm_cmd)
 os.system(fm_cmd)
 
-os.system("rm " + fn_t)
-os.system("rm " + fn_v)
+os.system("del " + fn_t)
+os.system("del " + fn_v)

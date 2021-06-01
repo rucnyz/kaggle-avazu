@@ -18,8 +18,11 @@ raw_data_path = 'D:/2014_mobilectr/raw_data/'
 tmp_data_path = 'D:/2014_mobilectr/tmp_data/'
 
 # path to external binaries. Please see dependencies in the .pdf document
-fm_path = ' ~/Downloads/guestwalk/kaggle-2014-criteo/fm'
+# 换一下fm
+fm_path = ' D:/2014_mobilectr/kaggle-2014-criteo-1.0/solvers/fm/fm'
+# 这个不用
 xgb_path = '/home/zzhang/Downloads/xgboost/wrapper'
+# vw没用到
 vw_path = '~/vowpal_wabbit/vowpalwabbit/vw '
 
 try:

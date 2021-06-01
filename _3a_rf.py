@@ -59,7 +59,7 @@ feature_list = list_param + \
                ['all_withid', 'all_noid', 'all_but_ip', 'fm_5vars']
 
 rf1_imp = pd.DataFrame({'feature': feature_list, 'impt': clf.feature_importances_})
-print(rf1_imp.sort('impt'))
+print(rf1_imp.sort_values('impt'))
 
 print("to save validation predictions ...")
 dump(predv / ctr, utils.tmp_data_path + 'rf_pred_v.joblib_dat')

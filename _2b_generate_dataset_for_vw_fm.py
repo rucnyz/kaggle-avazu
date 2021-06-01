@@ -8,9 +8,9 @@ t0['dev_id_cnt2'] = np.minimum(t0.cnt_dev_id.astype('int32').values, 300)
 t0['dev_ip_cnt2'] = np.minimum(t0.cnt_dev_ip.astype('int32').values, 300)
 
 t0['dev_id2plus'] = t0.device_id.values
-t0.ix[t0.cnt_dev_id.values == 1, 'dev_id2plus'] = '___only1'
+t0.loc[t0.cnt_dev_id.values == 1, 'dev_id2plus'] = '___only1'
 t0['dev_ip2plus'] = t0.device_ip.values
-t0.ix[t0.cnt_dev_ip.values == 1, 'dev_ip2plus'] = '___only1'
+t0.loc[t0.cnt_dev_ip.values == 1, 'dev_ip2plus'] = '___only1'
 
 t0['device_ip_only_hour_for_day'] = t0.cnt_device_ip_day_hour.values == t0.cnt_device_ip_pday.values
 
@@ -30,7 +30,7 @@ vns1 = vns0 + ['hour1'] + ['_A_' + vn for vn in vns0] + \
 
 # 'cnt_device_ip_day', 'device_ip_only_hour_for_day'
 
-t3a = t3.ix[:, ['click']].copy()
+t3a = t3.loc[:, ['click']].copy()
 idx_base = 3000
 for vn in vns1:
 	if vn in ['cnt_device_ip_day_hour', 'cnt_device_ip_day_hour_prev', 'cnt_device_ip_day_hour_next',
