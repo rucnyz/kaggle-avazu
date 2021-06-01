@@ -20,12 +20,17 @@ xgb_pred = load(utils.tmp_data_path + 'xgb_pred_v.joblib_dat')
 print("xgb prediction loaded with shape", xgb_pred.shape)
 
 # GBDT+LR model output
-lr_pred = pd.read_csv(open(utils.tmp_data_path + 'lr.txt.out', 'r'), header = None).loc[:, 0].values
+ctr = 0
+lr_pred = 0
+for i in [1, 2, 3, 4]:
+    lr_pred += pd.read_csv(open(utils.tmp_data_path + 'lr__r%d_v.txt.out' % i, 'r'), header = None).loc[:, 0].values
+    ctr += 1
+lr_pred /= ctr
 print("LR prediction :", lr_pred.shape)
 
 # factorization machine model output
 ctr = 0
-fm_pred = lr_pred
+fm_pred = 0
 for i in [51, 52, 53, 54]:
     fm_pred += pd.read_csv(open(utils.tmp_data_path + 'fm__r%d_v.txt.out' % i, 'r'), header = None).loc[:, 0].values
     ctr += 1
@@ -37,9 +42,8 @@ print("FM prediction:", fm_pred.shape)
 blending_w = {'rf': .25, 'xgb': .25, 'lr': .25, 'fm': .25}
 
 total_w = 0
-pred = 0
 
-pred += rf_pred * blending_w['rf']
+pred = rf_pred * blending_w['rf']
 total_w += blending_w['rf']
 pred += xgb_pred * blending_w['xgb']
 total_w += blending_w['xgb']

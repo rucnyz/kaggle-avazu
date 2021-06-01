@@ -54,7 +54,7 @@ for day_v in range(day_bgn, day_end):
         path1 = 'D:/2014_mobilectr/tmp_data/fn/'
         fn_t = path1 + '_tmp_2way_t.txt'
         fn_v = path1 + '_tmp_2way_v.txt'
-
+        os.mkdir(path1)
         print("to write data files ...")
 
         t1.loc[np.logical_and(day_values >= 21, day_values < day_v), :].to_csv(open(fn_t, 'w'), sep = '\t',

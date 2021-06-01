@@ -158,10 +158,10 @@ build_data()
 
 train_data = pd.read_csv(fn_train)
 validate_data = pd.read_csv(fn_validate)
-lm = LogisticRegression(C = 0.05, max_iter = 200)
+lm = LogisticRegression(C = 0.05, max_iter = 500, random_state = rseed)
 lm.fit(train_data.iloc[:, 2:], train_data["click"])
 a = lm.predict_proba(validate_data.iloc[:, 2:])
-np.savetxt(path1 + "lr.txt.out", a[:, 1])
+np.savetxt(path1 + "lr__r%d_v.txt.out" % rseed, a[:, 1])
 # if tvh == 'Y':
 #     holdout_str = " --holdout_off "
 # else:
