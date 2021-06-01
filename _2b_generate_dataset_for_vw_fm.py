@@ -1,7 +1,7 @@
 import utils
 from utils import *
 
-sys.stdout = Logger('D:\\2014_mobilectr\\2_generate_dataset_for_lr_fm.txt')
+#sys.stdout = Logger('D:\\2014_mobilectr\\2_generate_dataset_for_lr_fm.txt')
 t0 = load(utils.tmp_data_path + 't0.joblib_dat')
 print("t0 loaded with shape", t0.shape)
 

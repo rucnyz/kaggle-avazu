@@ -11,7 +11,7 @@ from sklearn.utils import check_random_state
 sample_pct = .05
 tvh = 'N'
 xgb_n_trees = 300
-
+data_type = ''
 
 class Logger(object):
     def __init__(self, filename = "Default.log"):
@@ -32,13 +32,13 @@ class Logger(object):
 # Please set following path accordingly
 
 # where we can find training, test, and sampleSubmission.csv
-raw_data_path = 'D:\\2014_mobilectr\\raw_data\\'
+raw_data_path = 'D:\\Program\\Py-program\\Machine-Learning\\data\\'
 # where we store results -- require about 130GB
-tmp_data_path = 'D:\\2014_mobilectr\\tmp_data\\'
-data_type = ''
+tmp_data_path = 'D:\\Program\\Py-program\\Machine-Learning\\data\\'
+
 # path to external binaries. Please see dependencies in the .pdf document
 # 换一下fm
-fm_path = ' D:\\2014_mobilectr\\kaggle-2014-criteo-1.0\\solvers\\fm\\fm'
+fm_path = ' D:\\Program\\Py-program\\Machine-Learning\\kaggle-2014-criteo-1.0\\solvers\\fm\\fm'
 # 这个不用
 xgb_path = '/home/zzhang/Downloads/xgboost/wrapper'
 # vw没用到
@@ -61,17 +61,18 @@ def print_help():
 
 def main():
     if sys.argv[1] == '-set_params' and len(sys.argv) == 5:
+        # try:
+        tvh = sys.argv[2]
+        sample_pct = float(sys.argv[3])
+        data_type = sys.argv[4]
+        #print(tmp_data_path)
+        dump({'pct': sample_pct, 'tvh': tvh, 'type': data_type}, tmp_data_path + '_params.joblib_dat')
         try:
-            tvh = sys.argv[2]
-            sample_pct = float(sys.argv[3])
-            data_type = sys.argv[4]
-            dump({'pct': sample_pct, 'tvh': tvh, 'type': data_type}, tmp_data_path + '_params.joblib_dat')
-            try:
-                os.mkdir(tmp_data_path+data_type)
-            except:
-                pass
+            os.mkdir(tmp_data_path+data_type)
         except:
-            print_help()
+            pass
+        # except:
+        #     print_help()
     else:
         print_help()
 

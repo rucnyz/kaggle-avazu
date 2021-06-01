@@ -3,7 +3,7 @@ from utils import *
 
 import xgboost as xgb
 
-sys.stdout = Logger('D:\\2014_mobilectr\\3_fm.txt')
+#sys.stdout = Logger('D:\\2014_mobilectr\\3_fm.txt')
 rseed = 0
 xgb_eta = .3
 tvh = utils.tvh

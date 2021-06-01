@@ -4,7 +4,7 @@ from sklearn.linear_model import LogisticRegression
 import utils
 from utils import *
 
-sys.stdout = Logger('D:\\2014_mobilectr\\3_lr.txt')
+#sys.stdout = Logger('D:\\2014_mobilectr\\3_lr.txt')
 rseed = 0
 xgb_eta = .3
 tvh = utils.tvh

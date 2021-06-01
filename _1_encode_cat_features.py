@@ -1,7 +1,7 @@
 import utils
 from utils import *
 
-sys.stdout = Logger('D:\\2014_mobilectr\\1_encode.txt')
+sys.stdout = Logger('D:\\Program\\Py-program\\Machine-Learning\\1_encode.txt')
 raw_data_path = utils.raw_data_path
 tmp_data_path = utils.tmp_data_path
 # t0org0是总的数据
