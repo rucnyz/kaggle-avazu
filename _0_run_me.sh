@@ -15,7 +15,7 @@ python _3d_fm.py -rseed 52
 python _3d_fm.py -rseed 53
 python _3d_fm.py -rseed 54
 python _4_post_processing.py
-#should generate logloss ~= 0.3937
+#should generate logloss ~= 0.3937//0.4001
 exit
 # 暂时不支持
 # try a quick submission using small sample data

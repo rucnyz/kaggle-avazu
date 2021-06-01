@@ -11,7 +11,7 @@ print("t0tv_mx3 loaded with shape", t0tv_mx3.shape)
 
 day_test = 30
 if utils.tvh == 'Y':
-	day_test = 31
+    day_test = 31
 
 print("to create Random Forest using day", day_test, " as validation")
 
@@ -28,20 +28,20 @@ yv = click_values[day_values == day_test]
 nn = t0tv_mx3.shape[0]
 
 for i1 in range(8):
-	clf.random_state = i1
-	np.random.seed(i1)
-	r1 = np.random.uniform(0, 1, nn)
-	filter1 = np.logical_and(np.logical_and(day_values >= _start_day, day_values < day_test),
-	                         np.logical_and(r1 < .3, True))
-	xt1 = t0tv_mx3[filter1, :]
-	yt1 = click_values[filter1]
-	clf.fit(xt1, yt1)
-	y_hat = clf.predict_proba(xv)[:, 1]
-	predv += y_hat
-	ctr += 1
-	ll = logloss(predv / ctr, yv)
-	print("iter", i1, ", logloss = ", ll)
-	sys.stdout.flush()
+    clf.random_state = i1
+    np.random.seed(i1)
+    r1 = np.random.uniform(0, 1, nn)
+    filter1 = np.logical_and(np.logical_and(day_values >= _start_day, day_values < day_test),
+                             np.logical_and(r1 < .3, True))
+    xt1 = t0tv_mx3[filter1, :]
+    yt1 = click_values[filter1]
+    clf.fit(xt1, yt1)
+    y_hat = clf.predict_proba(xv)[:, 1]
+    predv += y_hat
+    ctr += 1
+    ll = logloss(predv / ctr, yv)
+    print("iter", i1, ", logloss = ", ll)
+    sys.stdout.flush()
 
 list_param = ['C1', 'C14', 'C15', 'C16', 'C17', 'C18', 'C19', 'C20', 'C21', 'banner_pos', 'device_type',
               'device_conn_type']

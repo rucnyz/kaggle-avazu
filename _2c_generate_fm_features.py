@@ -1,4 +1,5 @@
 import os
+
 import utils
 from utils import *
 
@@ -35,6 +36,10 @@ day_bgn = 22
 day_end = 32
 
 fm_vecs = {}
+path1 = 'D:/2014_mobilectr/tmp_data/fn/'
+os.mkdir(path1)
+fn_t = path1 + '_tmp_2way_t.txt'
+fn_v = path1 + '_tmp_2way_v.txt'
 for day_v in range(day_bgn, day_end):
     fm_vecs[day_v] = {}
     for vns_name in vns.keys():
@@ -51,10 +56,6 @@ for day_v in range(day_bgn, day_end):
             idx_base = t1[vn].values.max() + 1
         # print '-'* 5, vn, idx_base
 
-        path1 = 'D:/2014_mobilectr/tmp_data/fn/'
-        fn_t = path1 + '_tmp_2way_t.txt'
-        fn_v = path1 + '_tmp_2way_v.txt'
-        os.mkdir(path1)
         print("to write data files ...")
 
         t1.loc[np.logical_and(day_values >= 21, day_values < day_v), :].to_csv(open(fn_t, 'w'), sep = '\t',

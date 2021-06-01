@@ -16,10 +16,10 @@ t0['device_ip_only_hour_for_day'] = t0.cnt_device_ip_day_hour.values == t0.cnt_d
 
 vns0 = ['app_or_web', 'banner_pos', 'C1', 'C15', 'C16', 'C17', 'C18', 'C19', 'C20', 'C21']
 for vn in vns0 + ['C14']:
-	print(vn)
-	vn2 = '_A_' + vn
-	t0[vn2] = np.add(t0['app_site_id'].values, t0[vn].astype('string').values)
-	t0[vn2] = t0[vn2].astype('category')
+    print(vn)
+    vn2 = '_A_' + vn
+    t0[vn2] = np.add(t0['app_site_id'].values, t0[vn].astype('string').values)
+    t0[vn2] = t0[vn2].astype('category')
 
 t3 = t0
 vns1 = vns0 + ['hour1'] + ['_A_' + vn for vn in vns0] + \
@@ -33,23 +33,23 @@ vns1 = vns0 + ['hour1'] + ['_A_' + vn for vn in vns0] + \
 t3a = t3.loc[:, ['click']].copy()
 idx_base = 3000
 for vn in vns1:
-	if vn in ['cnt_device_ip_day_hour', 'cnt_device_ip_day_hour_prev', 'cnt_device_ip_day_hour_next',
-	          'cnt_device_ip_pday',
-	          'cnt_diff_device_ip_day_pday', 'cnt_device_ip_day', 'cnt_device_ip_pday']:
-		_cat = pd.Series(np.maximum(-100, np.minimum(200, t3[vn].values))).astype('category').values.codes
-	elif vn in ['as_domain']:
-		_cat = pd.Series(np.add(t3['app_domain'].values, t3['site_domain'].values)).astype('category').values.codes
-	elif vn in ['as_category']:
-		_cat = pd.Series(np.add(t3['app_category'].values, t3['site_category'].values)).astype('category').values.codes
-	elif vn in ['as_model']:
-		_cat = pd.Series(np.add(t3['app_site_id'].values, t3['device_model'].values)).astype('category').values.codes
-	else:
-		_cat = t3[vn].astype('category').values.codes
-	_cat = np.asarray(_cat, dtype = 'int32')
-	_cat1 = _cat + idx_base
-	t3a[vn] = _cat1
-	print(vn, idx_base, _cat1.min(), _cat1.max(), np.unique(_cat).size)
-	idx_base += np.max(_cat) + 1
+    if vn in ['cnt_device_ip_day_hour', 'cnt_device_ip_day_hour_prev', 'cnt_device_ip_day_hour_next',
+              'cnt_device_ip_pday',
+              'cnt_diff_device_ip_day_pday', 'cnt_device_ip_day', 'cnt_device_ip_pday']:
+        _cat = pd.Series(np.maximum(-100, np.minimum(200, t3[vn].values))).astype('category').values.codes
+    elif vn in ['as_domain']:
+        _cat = pd.Series(np.add(t3['app_domain'].values, t3['site_domain'].values)).astype('category').values.codes
+    elif vn in ['as_category']:
+        _cat = pd.Series(np.add(t3['app_category'].values, t3['site_category'].values)).astype('category').values.codes
+    elif vn in ['as_model']:
+        _cat = pd.Series(np.add(t3['app_site_id'].values, t3['device_model'].values)).astype('category').values.codes
+    else:
+        _cat = t3[vn].astype('category').values.codes
+    _cat = np.asarray(_cat, dtype = 'int32')
+    _cat1 = _cat + idx_base
+    t3a[vn] = _cat1
+    print(vn, idx_base, _cat1.min(), _cat1.max(), np.unique(_cat).size)
+    idx_base += np.max(_cat) + 1
 
 print("to save t3a ...")
 t3a_save = {}

@@ -1,12 +1,10 @@
 import utils
 from utils import *
 
-# sys.path.append('/home/zzhang/Downloads/xgboost/wrapper')
-
 raw_data_path = utils.raw_data_path
 tmp_data_path = utils.tmp_data_path
 # t0org0是总的数据
-t0org0 = pd.read_csv(raw_data_path + "new_train.csv")
+t0org0 = pd.read_csv(raw_data_path + "train.csv")
 h0org = pd.read_csv(raw_data_path + "test.csv")
 
 if utils.sample_pct < 1.0:
@@ -14,6 +12,11 @@ if utils.sample_pct < 1.0:
     r1 = np.random.uniform(0, 1, h0org.shape[0])
     h0org = h0org.loc[r1 < utils.sample_pct, :]
     print("testing with small sample of testing data, ", h0org.shape)
+
+    np.random.seed(999)
+    r1 = np.random.uniform(0, 1, t0org0.shape[0])
+    t0org0 = t0org0.loc[r1 < utils.sample_pct, :]
+    print("testing with small sample of training data, ", t0org0.shape)
 
 h0org['click'] = 0
 t0org = pd.concat([t0org0, h0org])

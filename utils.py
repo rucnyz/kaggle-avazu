@@ -1,10 +1,11 @@
+import sys
+import time
+
 import numpy as np
 import pandas as pd
+from joblib import dump, load
 from matplotlib import pyplot as plt
 from sklearn.utils import check_random_state
-import time
-import sys
-from joblib import dump, load
 
 sample_pct = .05
 tvh = 'N'
@@ -13,13 +14,13 @@ xgb_n_trees = 300
 # Please set following path accordingly
 
 # where we can find training, test, and sampleSubmission.csv
-raw_data_path = 'D:/2014_mobilectr/raw_data/'
+raw_data_path = 'D:\\2014_mobilectr\\raw_data\\'
 # where we store results -- require about 130GB
-tmp_data_path = 'D:/2014_mobilectr/tmp_data/'
+tmp_data_path = 'D:\\2014_mobilectr\\tmp_data\\'
 
 # path to external binaries. Please see dependencies in the .pdf document
 # 换一下fm
-fm_path = ' D:/2014_mobilectr/kaggle-2014-criteo-1.0/solvers/fm/fm'
+fm_path = ' D:\\2014_mobilectr\\kaggle-2014-criteo-1.0\\solvers\\fm\\fm'
 # 这个不用
 xgb_path = '/home/zzhang/Downloads/xgboost/wrapper'
 # vw没用到
